@@ -11,7 +11,11 @@ class ShellGpt < Formula
   depends_on "rust" => :build # for jiter, pydantic-core
   depends_on "python@3.14"
 
-  pypi_packages package_name: "shell-gpt"
+  # shell-gpt imports click directly and passes click.types.Choice to typer.
+  # typer vendored click into typer._click in 0.26.0, dropping the top-level
+  # click dependency, so pin the last click-based release.
+  pypi_packages package_name:   "shell-gpt",
+                extra_packages: "typer==0.25.1"
 
   resource "annotated-doc" do
     url "https://files.pythonhosted.org/packages/5a/8e/38aa427ed5402449e226975b649c5dc73ccadfefeb95e6aecb8f8ea4b6b6/annotated_doc-0.0.5.tar.gz"
