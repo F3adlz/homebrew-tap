@@ -8,6 +8,7 @@ class ShellGpt < Formula
   license "MIT"
   head "https://github.com/TheR1D/shell_gpt.git", branch: "main"
 
+  depends_on "rust" => :build # for jiter, pydantic-core
   depends_on "python@3.14"
 
   pypi_packages package_name: "shell-gpt"
