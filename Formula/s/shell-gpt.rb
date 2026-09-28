@@ -156,7 +156,9 @@ class ShellGpt < Formula
       before it handles any argument. Set it beforehand to skip the prompt:
         export OPENAI_API_KEY="your-key"
 
-      Configuration and roles are written to ~/.config/shell_gpt.
+      Configuration and roles are written to ~/.config/shell_gpt. Uninstalling
+      leaves that directory in place; remove it yourself if you want it gone:
+        rm -rf ~/.config/shell_gpt
     EOS
   end
 
