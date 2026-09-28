@@ -172,5 +172,13 @@ class ShellGpt < Formula
     # loop after a completion, so an offline test cannot reach it.
     assert_match "ShellGPT.json", shell_output("#{bin}/sgpt --list-roles")
     assert_path_exists testpath/".config/shell_gpt/roles/ShellGPT.json"
+
+    # certifi comes from the formula rather than the venv, so check the venv
+    # resolves it to the ca-certificates bundle and that the bundle parses.
+    # This covers that wiring, not a real TLS handshake.
+    certifi_pem = Pathname(shell_output("#{libexec}/bin/python -c 'import certifi; print(certifi.where())'").chomp)
+    assert_equal (Formula["ca-certificates"].pkgetc/"cert.pem").to_s, certifi_pem.realpath.to_s
+    assert_path_exists certifi_pem.realpath
+    system libexec/"bin/python", "-c", "import httpx; httpx.create_ssl_context()"
   end
 end
