@@ -9,13 +9,17 @@ class ShellGpt < Formula
   head "https://github.com/TheR1D/shell_gpt.git", branch: "main"
 
   depends_on "rust" => :build # for jiter, pydantic-core
+  depends_on "certifi"
   depends_on "python@3.14"
 
   # shell-gpt imports click directly and passes click.types.Choice to typer.
   # typer vendored click into typer._click in 0.26.0, dropping the top-level
   # click dependency, so pin the last click-based release.
-  pypi_packages package_name:   "shell-gpt",
-                extra_packages: "typer==0.25.1"
+  # certifi comes from the formula above so the CA bundle tracks
+  # ca-certificates instead of freezing at build time.
+  pypi_packages package_name:     "shell-gpt",
+                extra_packages:   "typer==0.25.1",
+                exclude_packages: "certifi"
 
   resource "annotated-doc" do
     url "https://files.pythonhosted.org/packages/5a/8e/38aa427ed5402449e226975b649c5dc73ccadfefeb95e6aecb8f8ea4b6b6/annotated_doc-0.0.5.tar.gz"
@@ -30,11 +34,6 @@ class ShellGpt < Formula
   resource "anyio" do
     url "https://files.pythonhosted.org/packages/a9/d2/f4d173e22df740bc37b1db102b386ba719b66e95b0f0d751f556b387e6d2/anyio-4.15.1.tar.gz"
     sha256 "9f28306018cbd6d329e64a36d58256edff76dd996fe423bc957326e578b82a94"
-  end
-
-  resource "certifi" do
-    url "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz"
-    sha256 "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55"
   end
 
   resource "click" do
