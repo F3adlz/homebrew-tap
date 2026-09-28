@@ -150,6 +150,16 @@ class ShellGpt < Formula
     virtualenv_install_with_resources
   end
 
+  def caveats
+    <<~EOS
+      sgpt needs an API key and prompts for one interactively on first run,
+      before it handles any argument. Set it beforehand to skip the prompt:
+        export OPENAI_API_KEY="your-key"
+
+      Configuration and roles are written to ~/.config/shell_gpt.
+    EOS
+  end
+
   test do
     # sgpt prompts for an API key on first run before it handles any argument,
     # so seed one to keep the test offline.
