@@ -159,7 +159,9 @@ class ShellGpt < Formula
 
     assert_match "ShellGPT #{version}", shell_output("#{bin}/sgpt --version")
 
-    # Exercises the click/typer/rich stack and the default role bootstrap.
+    # Imports resolve and typer dispatches the flag through to the filesystem.
+    # The click/typer type interop behind the pin above sits in the interactive
+    # loop after a completion, so an offline test cannot reach it.
     assert_match "ShellGPT.json", shell_output("#{bin}/sgpt --list-roles")
     assert_path_exists testpath/".config/shell_gpt/roles/ShellGPT.json"
   end
