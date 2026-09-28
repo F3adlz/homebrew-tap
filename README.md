@@ -35,6 +35,12 @@ With Ansible:
 The binary is `sgpt`, not `shell-gpt`. On first run it prompts for an API key and
 writes its configuration to `~/.config/shell_gpt/`.
 
+That prompt comes before argument handling, so even `sgpt --version` blocks without
+a key, which is why the formula's test seeds `OPENAI_API_KEY`. The test deliberately
+does not set `HOME`: `brew test` already points `HOME` at `testpath`, so the config
+lands in the temporary test directory and the real `~/.config/shell_gpt/` is left
+alone.
+
 `typer` is pinned to 0.25.1 in the formula. `shell-gpt` imports `click` directly
 and passes `click.types.Choice` into `typer`, but only constrains
 `typer>=0.7.0,<1.0.0`. `typer` 0.26.0 vendored `click` into `typer._click` and

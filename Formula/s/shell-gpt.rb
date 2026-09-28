@@ -152,9 +152,8 @@ class ShellGpt < Formula
   end
 
   test do
-    # sgpt prompts for an API key on first run before any argument is handled,
-    # so seed both the config location and the key to keep the test offline.
-    ENV["HOME"] = testpath
+    # sgpt prompts for an API key on first run before it handles any argument,
+    # so seed one to keep the test offline.
     ENV["OPENAI_API_KEY"] = "sk-not-a-real-key"
 
     assert_match "ShellGPT #{version}", shell_output("#{bin}/sgpt --version")
