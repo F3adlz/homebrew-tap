@@ -24,6 +24,11 @@ Edit here, commit, then push the commit into the clone:
 
     git fetch "$TAP" main && git merge --ff-only FETCH_HEAD
 
+Resource blocks are generated output: `brew update-python-resources` and the
+autobump workflow overwrite them, and both take version constraints from the
+`pypi_packages` stanza. Pin versions there — a version hand-edited into a
+`resource` block is silently lost on the next regeneration.
+
 Never symlink the repo into `Library/Taps`, and never treat the clone as the
 source of truth.
 
